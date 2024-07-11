@@ -19,16 +19,11 @@
 - **SU01D** - Visualizar dados de usuário SAP
 - **SOST** - Verificar status de envio de email
 
-## Senhas de Ambientes
-
-- **XUO** - `V@@ne1902C@@the`
-- **XUP** - `V@@ne1902C@@the`
-- **XUQ** - `V@@ne1902C@@the`
-- **ECC** - `V@@ne19C@@the`
-
 ## Marretar Tabela
 
 Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDIT` e atribua a elas o valor “X”.
+- **SE16N_CD_KEY** - Rastrear quem marretou
+- **SE16N_CD_DATA** – Rastrear o que foi marretado
 
 ## Outras Transações e Funções
 
@@ -114,5 +109,4 @@ Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDI
 - **SU01** – Criação de usuário
 - **SU10** – Manutenção de usuário em massa
 - **SE30** – SQL Trace / Análise de Performance do Banco de Dados / Trace de Performance
-- **SE16N_CD_KEY** - Rastrear quem marretou
-- **SE16N_CD_DATA** – Rastrear o que foi marretado
+
