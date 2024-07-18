@@ -64,6 +64,7 @@ Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDI
 - **SE71** – Transação criar e dar manutenção em SapScript
 - **SE78** – Administração de Gráficos, Gráficos de Formulários e upload de imagens
 - **SE80** – Pacotes
+- **SE80** - É usado para montar mensagens que serão utilizadas nos programas.
 - **SE93** – Criar transação
 - **SHDB** – Batch input
 - **SICK** – Verificação da instalação
