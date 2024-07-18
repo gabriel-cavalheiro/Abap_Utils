@@ -52,7 +52,8 @@ Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDI
 - **SCOT** – Administração do SAPconnect
 - **SE03** – Ferramentas para Transportes: Busca de objetos em requests, modificações, análise, inclusão de objetos, etc
 - **SE10** – Consulta request
-- **SE11** – Consultar variaveis sys
+- **SE11** – Criar tabelas e consultar variaveis sys
+- **SE14** – Atualização de definições de tabelas direto no banco de dados
 - **SE18** – Visualizar BADI
 - **SE19** – Implementação de BADI
 - **SE21** – Administração de Pacotes / Criar novos pacotes
