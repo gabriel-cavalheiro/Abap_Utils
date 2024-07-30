@@ -19,7 +19,11 @@
 - **SU01D** - Visualizar dados de usuário SAP
 - **SOST** - Verificar status de envio de email
 
-## Marretar Tabela
+## Sites Úteis 🤝
+
+(https://www.abapemos.com/)
+
+## Marretar Tabela 🔨🪓
 
 Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDIT` e atribua a elas o valor “X”.
 - **SE16N_CD_KEY** - Rastrear quem marretou
