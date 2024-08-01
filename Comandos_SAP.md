@@ -33,6 +33,17 @@ Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDI
 
 %_HINTS DB6 '&prefer_join 0& &prefer_join_with_fda 1&'.
 
+### Exemplo:
+
+~~~
+SELECT * INTO TABLE db6out FROM t100
+BYPASSING BUFFER
+FOR ALL ENTRIES IN db6
+WHERE sprsl = db6-sprsl
+AND arbgb = db6-arbgb
+AND msgnr = db6-msgnr
+%_HINTS DB6 '&prefer_join 1& &prefer_join_with_fda 0&'.
+~~~
 ## Outras Transações e Funções
 
 - **ABAPDOCU** – Documentação ABAP e Exemplos de Código (por Samuel Xavier)
