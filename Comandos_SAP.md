@@ -29,6 +29,10 @@ Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDI
 - **SE16N_CD_KEY** - Rastrear quem marretou
 - **SE16N_CD_DATA** – Rastrear o que foi marretado
 
+## Melhorar perfomarce do FOR ALL ENTRIES
+
+%_HINTS DB6 '&prefer_join 0& &prefer_join_with_fda 1&'.
+
 ## Outras Transações e Funções
 
 - **ABAPDOCU** – Documentação ABAP e Exemplos de Código (por Samuel Xavier)
