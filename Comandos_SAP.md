@@ -44,6 +44,75 @@ AND arbgb = db6-arbgb
 AND msgnr = db6-msgnr
 %_HINTS DB6 '&prefer_join 1& &prefer_join_with_fda 0&'.
 ~~~
+
+## Zeros à esquerda e à direita em ABAP
+
+### Com Function:
+~~~
+DATA(lv_order_number) = CONV aufnr( 12345 ).
+WRITE |{ lv_order_number }|.    "Output: 12345
+
+"Add leading zeros
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input  = lv_order_number
+  IMPORTING
+    output = lv_order_number.
+
+WRITE |{ lv_order_number }|.    "Output: 000000012345
+
+"Remove leading zeros
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+  EXPORTING
+    input  = lv_order_number
+  IMPORTING
+    output = lv_order_number.
+
+WRITE |{ lv_order_number }|.    "Output: 12345
+~~~
+
+### Short Form:
+
+~~~~
+DATA(lv_order_number) = CONV aufnr( 12345 ).
+WRITE |{ lv_order_number }|.    "Output: 12345
+
+lv_order_number =  |{ lv_order_number ALPHA = IN }|.
+WRITE |{ lv_order_number }|.    "Output: 000000012345
+
+lv_order_number =  |{ lv_order_number ALPHA = OUT }|.
+WRITE |{ lv_order_number }|.    "Output: 12345
+~~~~
+
+### Inline Declaration com operador CONV:
+
+~~~~
+DATA(lv_order_number) = CONV aufnr( |{ '12345' ALPHA = IN }| ).
+WRITE |{ lv_order_number }|.    "Output: 000000012345
+~~~~
+
+### Removendo com SHIFT:
+
+~~~~
+DATA(lv_order_number) = CONV aufnr( |{ '12345' ALPHA = IN }| ).
+WRITE |{ lv_order_number }|.    "Output: 000000012345
+
+SHIFT lv_order_number LEFT DELETING LEADING '0'.
+WRITE |{ lv_order_number }|.    "Output: 12345
+~~~~
+
+### Add Zeros com OVERLAY:
+
+~~~~
+DATA(lv_order_number) = CONV aufnr( 12345 ).
+WRITE |{ lv_order_number }|.    "Output: 12345
+
+"Variável auxiliar do tipo string, sem zeros à esquerda ou à direita
+DATA(lv_order_number_string) =  |{ lv_order_number ALPHA = OUT }|.
+OVERLAY lv_order_number_string WITH '000000000000'.
+WRITE |{ lv_order_number_string }|.    "Output: 123450000000
+~~~~
+
 ## Outras Transações e Funções
 
 - **ABAPDOCU** – Documentação ABAP e Exemplos de Código (por Samuel Xavier)
