@@ -23,6 +23,8 @@
 
 <https://www.abapemos.com/>
 
+<https://www.abapemos.com/2020/03/alv-simples-com-clsalvtable.html>
+
 ## Marretar Tabela 🔨🪓
 
 Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDIT` e atribua a elas o valor “X”.
