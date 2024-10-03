@@ -1,24 +1,6 @@
 
 # Comandos e Transações SAP
 
-## Principais Transações
-
-- **SU53** - Log de objeto de autorização
-- **ST22** - Log de Dumps
-- **SE03** - Desbloqueio de objetos na request
-- **RDDIT076** - Alterar status da request - ir pela SE38
-- **/N/SAST/LOGON** - Solicitar usuário SAST
-- **/n/iwfnd/maint_service** - Verificar funcionamento de API
-- **SEGW** - Visualizar a definição do serviço "API"
-- **SO10** - Impressora
-- **ZPP035** - Impressora
-- **RS_HDSYS_CALL_TC_VARIANT** - Authority check
-- **Reset de senha SAP** - Senha: `pass`
-- **/n/pgtpa/op_ger** - Op SOFICOM
-- **Para voltar uma instrução** - Posicionar na linha e pressionar Shift + F12
-- **SU01D** - Visualizar dados de usuário SAP
-- **SOST** - Verificar status de envio de email
-
 ## Sites Úteis 🤝
 
 <https://www.abapemos.com/>
@@ -31,7 +13,9 @@ Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDI
 - **SE16N_CD_KEY** - Rastrear quem marretou
 - **SE16N_CD_DATA** – Rastrear o que foi marretado
 
-## Melhorar perfomarce do FOR ALL ENTRIES
+## Trechos de Códigos Utéis
+
+### Melhorar perfomarce do FOR ALL ENTRIES
 
 %_HINTS DB6 '&prefer_join 0& &prefer_join_with_fda 1&'.
 
@@ -47,9 +31,9 @@ AND msgnr = db6-msgnr
 %_HINTS DB6 '&prefer_join 1& &prefer_join_with_fda 0&'.
 ~~~
 
-## Zeros à esquerda e à direita em ABAP
+### Zeros à esquerda e à direita em ABAP
 
-### Com Function:
+#### Com Function:
 ~~~
 DATA(lv_order_number) = CONV aufnr( 12345 ).
 WRITE |{ lv_order_number }|.    "Output: 12345
@@ -73,7 +57,7 @@ CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
 WRITE |{ lv_order_number }|.    "Output: 12345
 ~~~
 
-### Short Form:
+#### Short Form:
 
 ~~~~
 DATA(lv_order_number) = CONV aufnr( 12345 ).
@@ -86,14 +70,14 @@ lv_order_number =  |{ lv_order_number ALPHA = OUT }|.
 WRITE |{ lv_order_number }|.    "Output: 12345
 ~~~~
 
-### Inline Declaration com operador CONV:
+#### Inline Declaration com operador CONV:
 
 ~~~~
 DATA(lv_order_number) = CONV aufnr( |{ '12345' ALPHA = IN }| ).
 WRITE |{ lv_order_number }|.    "Output: 000000012345
 ~~~~
 
-### Removendo com SHIFT:
+#### Removendo com SHIFT:
 
 ~~~~
 DATA(lv_order_number) = CONV aufnr( |{ '12345' ALPHA = IN }| ).
@@ -103,7 +87,7 @@ SHIFT lv_order_number LEFT DELETING LEADING '0'.
 WRITE |{ lv_order_number }|.    "Output: 12345
 ~~~~
 
-### Add Zeros com OVERLAY:
+#### Add Zeros com OVERLAY:
 
 ~~~~
 DATA(lv_order_number) = CONV aufnr( 12345 ).
@@ -115,8 +99,53 @@ OVERLAY lv_order_number_string WITH '000000000000'.
 WRITE |{ lv_order_number_string }|.    "Output: 123450000000
 ~~~~
 
-## Outras Transações e Funções
+### Form para Authorith-Check
+~~~
+*&---------------------------------------------------------------------*
+*& Form zf_auth
+*&---------------------------------------------------------------------*
+FORM zf_auth  USING  p_bukrs      TYPE bukrs
+           CHANGING  p_continue
+                     p_check_auth.
 
+  CLEAR p_continue.
+
+  CONSTANTS:
+    c_actvt TYPE xufield     VALUE 'ACTVT',      " ACTVT
+    c_bukrs TYPE xufield     VALUE 'BUKRS',      " BUKRS
+    c_03    TYPE xuval       VALUE '03'.         " Act. leitura
+
+  AUTHORITY-CHECK OBJECT 'F_BKPF_BUK'
+  ID c_actvt FIELD c_03
+  ID c_bukrs FIELD p_bukrs.
+
+  IF sy-subrc IS NOT INITIAL.
+*   Sem autorização para uso da transação
+    p_continue   = 'X'.
+    p_check_auth = 'X'.
+  ENDIF.
+
+ENDFORM.
+~~~~
+
+
+### Principais Transações
+
+- **SU53** - Log de objeto de autorização
+- **ST22** - Log de Dumps
+- **SE03** - Desbloqueio de objetos na request
+- **RDDIT076** - Alterar status da request - ir pela SE38
+- **/N/SAST/LOGON** - Solicitar usuário SAST
+- **/n/iwfnd/maint_service** - Verificar funcionamento de API
+- **SEGW** - Visualizar a definição do serviço "API"
+- **SO10** - Impressora
+- **ZPP035** - Impressora
+- **RS_HDSYS_CALL_TC_VARIANT** - Authority check
+- **Reset de senha SAP** - Senha: `pass`
+- **/n/pgtpa/op_ger** - Op SOFICOM
+- **Para voltar uma instrução** - Posicionar na linha e pressionar Shift + F12
+- **SU01D** - Visualizar dados de usuário SAP
+- **SOST** - Verificar status de envio de email
 - **ABAPDOCU** – Documentação ABAP e Exemplos de Código (por Samuel Xavier)
 - **AL08** – Usuários autenticados no ambiente
 - **AL11** – Diretórios / Pastas do Servidor do SAP
