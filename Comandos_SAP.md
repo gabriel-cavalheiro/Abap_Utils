@@ -9,6 +9,8 @@
 
 <https://saplearners.com/>
 
+<https://software-heroes.com/en/new-abap-statements>
+
 ## Marretar Tabela 🔨🪓
 
 Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDIT` e atribua a elas o valor “X”.
