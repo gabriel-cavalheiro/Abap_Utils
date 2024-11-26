@@ -17,6 +17,10 @@ Na tela que se abre (ABAP debugger), insira as variáveis `GD-EDIT` e `GD-SAPEDI
 - **SE16N_CD_KEY** - Rastrear quem marretou
 - **SE16N_CD_DATA** – Rastrear o que foi marretado
 
+## Transportar Textos SO10 📃
+
+Executar o programa **RSTXTRAN** na SE38 e atribuir a uma task.
+
 ## Trechos de Códigos Utéis
 
 ### Melhorar perfomarce do FOR ALL ENTRIES
