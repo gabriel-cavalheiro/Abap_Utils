@@ -27,6 +27,8 @@ Executar o programa **RSTXTRAN** na SE38 e atribuir a uma task.
 
 %_HINTS DB6 '&prefer_join 0& &prefer_join_with_fda 1&'.
 
+___
+
 ### Exemplo:
 
 ~~~
