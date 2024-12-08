@@ -39,6 +39,82 @@ AND msgnr = db6-msgnr
 %_HINTS DB6 '&prefer_join 1& &prefer_join_with_fda 0&'.
 ~~~
 
+### Somar valores de uma coluna com REDUCE
+
+### Exemplo 1:
+
+~~~
+TYPES: tty_ekpo TYPE ekpo.
+SELECT * FROM ekpo 
+  INTO TABLE @DATA(it_ekpo)
+  UP TO 10 ROWS.
+
+DATA(lt2_dados) = REDUCE tty_ekpo( INIT cline = VALUE tty_ekpo( )
+                 FOR GROUPS <group_key> OF <g> IN it_ekpo GROUP BY ( ebeln = <g>-ebeln ebelp = <g>-ebelp )
+                 NEXT cline = VALUE #( BASE cline ( ebeln = <group_key>-ebeln ebelp = <group_key>-ebelp
+                                                    netwr = REDUCE netwr( INIT val TYPE netwr
+                                                                          FOR wa IN
+                                                                          FILTER #( it_ekpo WHERE ebeln = <group_key>-ebeln AND ebelp = <group_key>-ebelp )
+                                                                          NEXT val = val + wa-netwr ) ) ) ).
+~~~
+
+### Exemplo 2:
+
+~~~
+TYPES: BEGIN OF ty_itemdata_collect.
+               INCLUDE TYPE bapi_incinv_create_item.
+               TYPES  matnr TYPE ekpo-matnr.
+      TYPES: END OF ty_itemdata_collect,
+      tt_itemdata_collect TYPE STANDARD TABLE OF ty_itemdata_collect WITH DEFAULT KEY.
+
+DATA(lt_aux_collect) = VALUE tt_itemdata_collect(
+        FOR GROUPS <group_key> OF <group> IN lt_aux GROUP BY ( po_number = <group>-po_number
+                                                               matnr     = <group>-matnr  )
+          LET coll_line = REDUCE #(
+              INIT line TYPE ty_itemdata_collect FOR <member> IN GROUP <group_key>
+              NEXT
+                   line-invoice_doc_item        = <member>-invoice_doc_item + 1
+                   line-po_number               = <member>-po_number
+                   line-po_item                 = <member>-po_item
+                   line-ref_doc                 = <member>-ref_doc
+                   line-ref_doc_year            = <member>-ref_doc_year
+                   line-ref_doc_it              = <member>-ref_doc_it
+                   line-de_cre_ind              = <member>-de_cre_ind
+                   line-tax_code                = <member>-tax_code
+                   line-taxjurcode              = <member>-taxjurcode
+                   line-item_amount             = line-item_amount + <member>-item_amount
+                   line-quantity                = line-quantity + <member>-quantity
+                   line-po_unit                 = <member>-po_unit
+                   line-po_unit_iso             = <member>-po_unit_iso
+                   line-po_pr_qnt               = line-po_pr_qnt + <member>-po_pr_qnt
+                   line-po_pr_uom               = <member>-po_pr_uom
+                   line-po_pr_uom_iso           = line-po_pr_uom_iso + <member>-po_pr_uom_iso
+                   line-cond_type               = <member>-cond_type
+                   line-cond_st_no              = <member>-cond_st_no
+                   line-cond_count              = <member>-cond_count
+                   line-sheet_no                = <member>-sheet_no
+                   line-item_text               = <member>-item_text
+                   line-final_inv               = <member>-final_inv
+                   line-sheet_item              = <member>-sheet_item
+                   line-grir_clear_srv          = <member>-grir_clear_srv
+                   line-freight_ven             = <member>-freight_ven
+                   line-cshdis_ind              = <member>-cshdis_ind
+                   line-retention_docu_currency = line-retention_docu_currency + <member>-retention_docu_currency
+                   line-retention_percentage    = line-retention_percentage + <member>-retention_percentage
+                   line-retention_due_date      = <member>-retention_due_date
+                   line-no_retention            = <member>-no_retention
+                   line-inv_itm_origin          = <member>-inv_itm_origin
+         ) IN ( coll_line ) ) .
+~~~
+
+### Contar caracteres
+
+### Exemplo:
+
+~~~
+v_len = strlen( v_str ).
+~~~
+
 ### Zeros à esquerda e à direita em ABAP
 
 #### Com Function:
