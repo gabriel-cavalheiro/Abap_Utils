@@ -27,8 +27,6 @@ Executar o programa **RSTXTRAN** na SE38 e atribuir a uma task.
 
 %_HINTS DB6 '&prefer_join 0& &prefer_join_with_fda 1&'.
 
-___
-
 ### Exemplo:
 
 ~~~
@@ -40,6 +38,8 @@ AND arbgb = db6-arbgb
 AND msgnr = db6-msgnr
 %_HINTS DB6 '&prefer_join 1& &prefer_join_with_fda 0&'.
 ~~~
+
+___
 
 ### Somar valores de uma coluna com REDUCE
 
@@ -109,6 +109,8 @@ DATA(lt_aux_collect) = VALUE tt_itemdata_collect(
          ) IN ( coll_line ) ) .
 ~~~
 
+___
+
 ### Contar caracteres
 
 ### Exemplo:
@@ -116,6 +118,8 @@ DATA(lt_aux_collect) = VALUE tt_itemdata_collect(
 ~~~
 v_len = strlen( v_str ).
 ~~~
+
+___
 
 ### Zeros à esquerda e à direita em ABAP
 
@@ -185,6 +189,8 @@ OVERLAY lv_order_number_string WITH '000000000000'.
 WRITE |{ lv_order_number_string }|.    "Output: 123450000000
 ~~~~
 
+___
+
 ### Form para Authorith-Check
 ~~~
 *&---------------------------------------------------------------------*
@@ -214,6 +220,7 @@ FORM zf_auth  USING  p_bukrs      TYPE bukrs
 ENDFORM.
 ~~~~
 
+___
 
 ### Principais Transações
 
