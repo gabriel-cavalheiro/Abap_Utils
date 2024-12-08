@@ -135,17 +135,6 @@ SELECT * FROM scarr INTO TABLE @DATA(lt_scarr).
 ## 9. CASE Expressions in SQL 🔄
 Adiciona lógica condicional diretamente nas consultas SQL.
 
-**Antigo:**
-
-~~~~
-SELECT carrid,
-       CASE WHEN mandt = '100' THEN 'Domestic' ELSE 'International' END AS flight_type
-  FROM scarr
-  INTO TABLE lt_scarr.
-~~~~
-
-**Novo:**
-
 ~~~~
 SELECT carrid,
        CASE WHEN mandt = '100' THEN 'Domestic' ELSE 'International' END AS flight_type
@@ -155,14 +144,6 @@ SELECT carrid,
 
 ## 10. UP TO n ROWS Addition 🔢
 Limita o número de linhas retornadas por um SELECT.
-
-**Antigo:**
-
-~~~~
-SELECT * FROM scarr INTO TABLE lt_scarr UP TO 10 ROWS.
-~~~~
-
-**Novo:**
 
 ~~~~
 SELECT * FROM scarr INTO TABLE @DATA(lt_scarr) UP TO 10 ROWS.
@@ -279,16 +260,6 @@ DATA(lt_table) = VALUE #( ( field1 = 'value1' field2 = 'value2' )
 
 ## 16. String Functions in SQL 🔤
 Realiza operações em colunas de texto diretamente no SQL.
-
-**Antigo:**
-
-~~~~
-SELECT carrid, LENGTH( carrname ) AS carrname_length
-  FROM scarr
-  INTO TABLE lt_scarr.
-~~~~
-
-**Novo:**
 
 ~~~~
 SELECT carrid, LENGTH( carrname ) AS carrname_length
@@ -481,58 +452,32 @@ DATA(lo_obj) = REF #( ls_structure ).
 ## 28. SHIFT LEFT/RIGHT ↔️
 Move caracteres em uma string.
 
-**Antigo:**
 
 ~~~~
 SHIFT lv_string LEFT DELETING LEADING space.
 ~~~~
 
-**Novo:**
-
-~~~~
-SHIFT lv_string LEFT DELETING LEADING space.
-~~~~
 
 ## 29. CONDENSE 🧼
 Remove espaços em branco de strings.
 
-**Antigo:**
 
 ~~~~
 CONDENSE lv_string NO-GAPS.
 ~~~~
 
-**Novo:**
-
-~~~~
-CONDENSE lv_string NO-GAPS.
-~~~~
 
 ## 30. TRANSLATE 🔠
 Converte maiúsculas/minúsculas em strings.
 
-**Antigo:**
 
 ~~~~
 TRANSLATE lv_string TO UPPER CASE.
 ~~~~
 
-**Novo:**
-
-~~~~
-TRANSLATE lv_string TO UPPER CASE.
-~~~~
 
 ## 31. SPLIT ✂️
 Divide strings em partes com base em delimitadores.
-
-**Antigo:**
-
-~~~~
-SPLIT lv_string AT space INTO TABLE lt_tokens.
-~~~~
-
-**Novo:**
 
 ~~~~
 SPLIT lv_string AT space INTO TABLE lt_tokens.
