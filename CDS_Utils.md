@@ -8,6 +8,7 @@
 
 | Função | Atalho |
 | --- | --- |
+| Duplicar linha | Ctrl + Alt + up/down |
 | Ativar objeto de desenvolvimento inativo | Ctrl + F3 |
 | Ativar todos os objetos de desenvolvimento inativos | Ctrl + Shift + F3 |
 | Verificar consistência e sintaxe | Ctrl + F2 |
