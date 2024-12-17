@@ -224,6 +224,7 @@ ___
 
 ### Principais Transações
 
+- **SMICM** - IP do Client
 - **SU53** - Log de objeto de autorização
 - **ST22** - Log de Dumps
 - **SE03** - Desbloqueio de objetos na request
