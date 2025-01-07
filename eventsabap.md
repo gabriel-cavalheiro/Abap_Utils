@@ -39,7 +39,7 @@ Os eventos em ABAP são como marcadores de capítulos em um livro. Eles controla
     WRITE: / 'O programa foi carregado!'.
 ~~~
 
-#### 2. INITIALIZATION
+#### 2. `INITIALIZATION`
 - **Por que utilizamos?**  
 Para inicializar valores padrão para parâmetros ou seleções antes da tela de seleção ser exibida.
 - **Quando utilizar?**
@@ -51,7 +51,7 @@ INITIALIZATION.
   p_user = sy-uname. "Preenche com o usuário atual
 ~~~
 
-#### 3. AT SELECTION-SCREEN
+#### 3. `AT SELECTION-SCREEN`
 - **Por que utilizamos?**  
 Para validar os dados inseridos na tela de seleção.
 - **Quando utilizar?**
@@ -65,7 +65,7 @@ AT SELECTION-SCREEN.
   ENDIF.
 ~~~
 
-#### 4. START-OF-SELECTION
+#### 4. `START-OF-SELECTION`
 - **Por que utilizamos?**  
 Esse é o coração do programa, onde a lógica principal acontece.
 - **Quando utilizar?**
@@ -77,7 +77,7 @@ START-OF-SELECTION.
   SELECT * FROM mara INTO TABLE lt_mara WHERE matnr = p_matnr.
 ~~~
 
-#### 5. GET (para Logical Databases)
+#### 5. `GET (para Logical Databases)`
 - **Por que utilizamos?**  
 Para manipular dados provenientes de uma Logical Database.
 - **Quando utilizar?**
@@ -89,7 +89,7 @@ GET mara.
   WRITE: / mara-matnr, mara-maktx.
 ~~~
 
-#### 6. END-OF-SELECTION
+#### 6. `END-OF-SELECTION`
 - **Por que utilizamos?**  
 Para realizar tarefas de finalização, como formatação de saída ou cálculos finais.
 - **Quando utilizar?**
@@ -104,7 +104,7 @@ END-OF-SELECTION.
 ~~~
 
 Eventos Relacionados à Tela de Seleção
-#### 7. AT SELECTION-SCREEN OUTPUT
+#### 7. `AT SELECTION-SCREEN OUTPUT`
 - **Por que utilizamos?**  
 Para ajustar a tela de seleção antes de ela ser exibida.
 - **Quando utilizar?**
@@ -121,7 +121,7 @@ AT SELECTION-SCREEN OUTPUT.
   ENDLOOP.
 ~~~
 
-#### 8. AT SELECTION-SCREEN ON <CAMPO>
+#### 8. `AT SELECTION-SCREEN ON <CAMPO>`
 - **Por que utilizamos?**  
 Para validar um campo específico da tela de seleção.
 - **Quando utilizar?**
@@ -135,7 +135,7 @@ AT SELECTION-SCREEN ON p_data.
   ENDIF.
 ~~~
 
-#### 9. AT SELECTION-SCREEN ON BLOCK
+#### 9. `AT SELECTION-SCREEN ON BLOCK`
 - **Por que utilizamos?**  
 Para manipular ou validar um bloco inteiro na tela de seleção.
 - **Quando utilizar?**
@@ -150,7 +150,7 @@ AT SELECTION-SCREEN ON BLOCK b1.
 ~~~
 
 Eventos Menos Usuais, Mas Úteis
-#### 10. TOP-OF-PAGE
+#### 10. `TOP-OF-PAGE`
 - **Por que utilizamos?**  
 Para criar um cabeçalho customizado no início de cada página de uma lista.
 - **Quando utilizar?**
@@ -162,7 +162,7 @@ TOP-OF-PAGE.
   WRITE: / 'Relatório de Materiais'.
 ~~~
 
-#### 11. END-OF-PAGE
+#### 11. `END-OF-PAGE`
 - **Por que utilizamos?**  
 Para criar um rodapé customizado no final de cada página de uma lista.
 - **Quando utilizar?**
@@ -175,7 +175,7 @@ END-OF-PAGE.
 ~~~
 
 Eventos Específicos para INTERACTIVE REPORTING
-#### 12. AT LINE-SELECTION
+#### 12. `AT LINE-SELECTION`
 - **Por que utilizamos?**  
 Para capturar a ação de clique em uma linha de relatório interativo.
 - **Quando utilizar?**
@@ -188,7 +188,7 @@ AT LINE-SELECTION.
   WRITE: / 'Material Selecionado:', ls_mara-matnr.
 ~~~
 
-#### 13. AT USER-COMMAND
+#### 13. `AT USER-COMMAND`
 - **Por que utilizamos?**  
 Para capturar comandos do usuário, como botões personalizados.
 - **Quando utilizar?**
@@ -205,7 +205,7 @@ AT USER-COMMAND.
   ENDCASE.
 ~~~
 
-#### 14. TOP-OF-PAGE DURING LINE-SELECTION
+#### 14. `TOP-OF-PAGE DURING LINE-SELECTION`
 - **Por que utilizamos?**  
 Para criar cabeçalhos em relatórios interativos detalhados.
 - **Quando utilizar?**
