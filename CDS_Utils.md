@@ -8,6 +8,7 @@
 
 | Função | Atalho |
 | --- | --- |
+| *Buscar objetos dentro do eclipse (CDS, Tables, etc.)* | Ctrl + Shift + a |
 | Duplicar linha | Ctrl + Alt + up/down |
 | Ativar objeto de desenvolvimento inativo | Ctrl + F3 |
 | Ativar todos os objetos de desenvolvimento inativos | Ctrl + Shift + F3 |
