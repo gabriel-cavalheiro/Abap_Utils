@@ -39,7 +39,38 @@ define view entity Z_CDS_EX
                   error_handling => 'FAIL_ON_ERROR' )
  as OrderQuantityInDisplayUnit,
 $parameters.P_DisplayUnit as OrderQuantityDisplayUnit
+}
+
+```
+
+```cds
+
+define view entity Z_CDS_EX
+ with parameters 
+  P_DisplayCurrency : waers_curc,
+  P_ExchangeRateDate : sydatum
+ as select distinct from zi_exemplo
+{
+ key SalesOrder,
+ key SalesOrderItem,
+ @Semantics.quantity.currencyCode: 'TransactionCurrency'
+ NetAmount,
+ TransactionCurrency,
+ @Semantics.quantity.currencyCode: 'TransactionCurrency' //moeda alvo
+ currency_conversion(
+              amount             => NetAmount,
+              source_currency    => TransactionCurrency,
+              target_currency    => $parameters.P_DisplayCurrency,
+              exchange_rate_date => $parameters.P_ExchangeRateDate,
+              exchange_rate_type => $parameters.P_DisplayUnit,
+              round              => 'M' 
+              decimal_shift      => 'X'
+              decimal_shift_back => 'X'
+              error_handling     => 'SET_TO_NULL' )
+ as NetAmountInDisplayCurrency,
+$parameters.P_DisplayCurrency as DisplayCurrency
 } 
+
 
 ```
 
