@@ -6,7 +6,7 @@
 
 <https://medium.com/@vitorkazuma/criando-crud-rap-com-gerador-adt-integrado-em-poucos-cliques-2396925d69eb>
 
-## Remover dados duplicados da seleção da CDS com select distinct
+## Remover dados duplicados da seleção da CDS com select distinct 🧮
 
 ```cds
 
@@ -18,7 +18,7 @@ define view entity Z_CDS_EX
 
 ```
 
-## Função para conversão de moedas e unidade de medidas
+## Função para conversão de moedas e unidade de medidas 💵🪙📐
 
 ```cds
 
