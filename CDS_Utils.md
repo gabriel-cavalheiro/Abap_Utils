@@ -11,10 +11,35 @@
 ```cds
 
 define view entity Z_CDS_EX
- as select distinct from t0000
+ as select distinct from ztbexemplo
 {
  key abap.char 'A' as Field
 }
+
+```
+
+## Função para conversão de moedas e unidade de medidas
+
+```cds
+
+define view entity Z_CDS_EX
+ with parameters // parametro de entrada
+  P_DisplayUnit : msehi
+ as select distinct from zi_exemplo
+{
+ key SalesOrder,
+ key SalesOrderItem,
+ @Semantics.quantity.unitOfMeasure: 'OrderQuantityUnit'
+ OrderQuantity,
+ OrderQuantityUnit,
+ @Semantics.quantity.unitOfMeasure: 'OrderQuantityDisplayUnit'
+ unit_conversion( quantity       => OrderQuantity,
+                  source_unit    => OrderQuantityUnit,
+                  target_unit    => $parameters.P_DisplayUnit,
+                  error_handling => 'FAIL_ON_ERROR' )
+ as OrderQuantityInDisplayUnit,
+$parameters.P_DisplayUnit as OrderQuantityDisplayUnit
+} 
 
 ```
 
