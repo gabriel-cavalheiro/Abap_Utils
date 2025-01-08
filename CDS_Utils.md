@@ -3,6 +3,7 @@
 ## Sites Utéis
 
 <https://sapcodes.com/2024/07/08/rap-1-eml-read-and-action/>
+<https://medium.com/@vitorkazuma/criando-crud-rap-com-gerador-adt-integrado-em-poucos-cliques-2396925d69eb>
 
 ## Remover dados duplicados da seleção da CDS com select distinct
 
