@@ -23,7 +23,7 @@ define view entity Z_CDS_EX
 ```cds
 
 define view entity Z_CDS_EX
- with parameters // parametro de entrada
+ with parameters //parametro de entrada
   P_DisplayUnit : msehi
  as select distinct from zi_exemplo
 {
@@ -32,7 +32,7 @@ define view entity Z_CDS_EX
  @Semantics.quantity.unitOfMeasure: 'OrderQuantityUnit'
  OrderQuantity,
  OrderQuantityUnit,
- @Semantics.quantity.unitOfMeasure: 'OrderQuantityDisplayUnit'
+ @Semantics.quantity.unitOfMeasure: 'OrderQuantityDisplayUnit' //unidade alvo
  unit_conversion( quantity       => OrderQuantity,
                   source_unit    => OrderQuantityUnit,
                   target_unit    => $parameters.P_DisplayUnit,
