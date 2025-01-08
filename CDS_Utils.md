@@ -4,6 +4,18 @@
 
 <https://sapcodes.com/2024/07/08/rap-1-eml-read-and-action/>
 
+## Remover dados duplicados da seleção da CDS com select distinct
+
+```cds
+
+define view entity Z_CDS_EX
+ as select distinct from t0000
+{
+ key abap.char 'A' as Field
+}
+
+```
+
 ## Ações de Edição
 
 | Função | Atalho |
