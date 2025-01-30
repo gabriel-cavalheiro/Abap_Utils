@@ -169,18 +169,18 @@ Realiza operações de agregação de forma declarativa.
 
 **Antigo:**
 
-~~~~
+```abap
 lv_total = 0.
 LOOP AT lt_table INTO ls_row.
   lv_total = lv_total + ls_row-value.
 ENDLOOP.
-~~~~
+```
 
 **Novo:**
 
-~~~~
+```abap
 DATA(lv_total) = REDUCE i( INIT sum = 0 FOR wa IN lt_table NEXT sum = sum + wa ).
-~~~~
+```
 
 **Exemplo prático:**
 
