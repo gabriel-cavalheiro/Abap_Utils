@@ -257,6 +257,29 @@ DATA(ls_struct) = VALUE #( field1 = 'value1' field2 = 'value2' ).
 DATA(lt_table) = VALUE #( ( field1 = 'value1' field2 = 'value2' )
                           ( field1 = 'value3' field2 = 'value4' ) ).
 ~~~~
+Em Estruturas:
+
+![image](https://github.com/user-attachments/assets/b39a15b8-7f45-45b3-b99d-fa5288bcc930)
+
+Em tabelas Internas:
+
+![image](https://github.com/user-attachments/assets/78b46186-4d61-403f-8a74-0a9a3f150de3)
+
+Tabela Interna com Valor Default:
+
+![image](https://github.com/user-attachments/assets/e6d0f7be-d806-49ce-90e6-4568e3d8255a)
+
+Uso como parâmetro de método:
+
+![image](https://github.com/user-attachments/assets/a8221e94-1f1d-4d50-a893-b31ab9f0dea2)
+
+Montado Range:
+
+![image](https://github.com/user-attachments/assets/7d49e61b-c05a-4fe9-8e95-b2e1665aadbf)
+
+Uso Append:
+
+![image](https://github.com/user-attachments/assets/3f91f6fd-9cbb-4456-b571-0eb3b2475fcb)
 
 ## 16. String Functions in SQL 🔤
 Realiza operações em colunas de texto diretamente no SQL.
