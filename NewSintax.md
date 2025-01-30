@@ -110,6 +110,22 @@ ENDLOOP.
 DATA(lt_filtered) = FILTER #( lt_table WHERE field = 'value' ).
 ~~~~
 
+**Exemplo com EXCEPT:**
+
+```abap
+DATA t_filter TYPE SORTED TABLE OF y_kna1-kunnr WITH UNIQUE KEY table_line.
+
+t_filter = VALUE #(
+ ('0000000010')
+).
+
+DATA(t_20e30) =
+  FILTER #(
+    t_kna1 EXCEPT IN t_filter
+    WHERE kunnr = table_line
+).
+```
+
 ## 7. REDUCE Operator ➕
 Realiza operações de agregação de forma declarativa.
 
@@ -490,6 +506,31 @@ IF line_exists( lt_table[ 1 ] ).
 ENDIF.
 ~~~~
 
+**Exemplo com COND:**
+
+```abap
+DATA(v_exist) = COND #(
+  WHEN line_exists(t_kna1[kunnr = '20'])
+  THEN 'Sim'
+  ELSE 'Não'
+).
+```
+
+## 25. line_index()
+Retorna o sy-tabix da tabela interna com expressão.
+
+**Antigo:**
+```abap
+READ TABLE t+kna1 TRANSPORTING NO FIELDS WITH KEY kunnr = '20'.
+
+DATA(v_tabix) = sy-tabix.
+```
+**Novo:**
+
+```abap
+DATA(v_tabix) = line_index(t_kna1[kunnr = '20']).
+```
+
 ## 24. BOOLC() 🔲
 Retorna 'X' ou espaço com base em uma expressão booleana.
 
@@ -589,3 +630,76 @@ Divide strings em partes com base em delimitadores.
 ~~~~
 SPLIT lv_string AT space INTO TABLE lt_tokens.
 ~~~~
+
+## 32. LET
+Permite criar variavel auxiliar apenas no escopo de uma expressão.
+
+```abap
+DATA(cinco) =
+  CONV i(
+    LET dois = 2
+        tres = 3
+    IN dois + tres
+).
+```
+
+Exemplo com field-symbol:
+
+```abap
+DATA(v3) = VALUE y_pot(
+  LET <v1> = t_val[1]-val
+       v2 = (<v1> + v2)
+). 
+```
+
+## 32. TABLE EXPRESSION
+Um READ TABLE em forma de expressão.
+
+Antigo:
+```abap
+READ TABLE t_kna1 INTO DATA(ls_10) WITH KEY kunnr ='10'.
+```
+Novo:
+```abap
+DATA(s_dez) = t_kna1[kunnr = '10'].
+```
+
+Exemplos de Uso:
+
+```abap
+*Sem Expressions
+READ TABLE t_kna1 INTO DATA(ls_dez) WITH KEY kunnr ='10'.
+
+READ TABLE t_kna1 INTO DATA(ls_vinte) INDEX 2.
+
+READ TABLE t_kna1 INTO DATA(ls_none) INDEX 3.
+IF (sy-subrc <> 0).
+...
+ENDIF.
+
+*Com Expressions
+DATA(s_dez) = t_kna1[kunnr = '10'].
+
+DATA(s_vinte) = t_kna1[2].
+
+TRY.
+  DATA(s_none) = t_kna1[3].
+CATCH cx_sy_itab_line_not_found INTO DATA(ex).
+...
+ENDTRY.
+```
+
+```abap
+DATA(s_10) = t_kna1[kunnr = '10'].
+DATA(s_10_name1) = s_10-name1.
+
+*É o mesmo que:
+DATA(s10_name) = t_kna1[kunnr ='10']-name1.
+```
+
+```abap
+*Tabela Dentro de Tabela:
+
+DATA(v_2002_netwr) = t_kna1[kunnr = '20']-t_orders[vbeln = '2002']-netwr.
+
+```
