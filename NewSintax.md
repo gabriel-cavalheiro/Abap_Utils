@@ -82,6 +82,17 @@ ENDLOOP.
 DATA(lt_new_table) = VALUE #( FOR wa IN lt_old_table ( wa ) ).
 ~~~~
 
+![image](https://github.com/user-attachments/assets/0e0b8b66-a996-496f-b2eb-d991b5466597)
+
+Criando uma tabela a partir de outra:
+
+![image](https://github.com/user-attachments/assets/92d821fd-df98-4417-b57d-82c351379694)
+
+Com WHERE:
+
+![image](https://github.com/user-attachments/assets/e32ab57f-efe2-45e7-bd40-2b8b5b0641b9)
+
+
 ## 6. FILTER Operator 🔍
 Filtra tabelas internas de maneira direta.
 
@@ -116,6 +127,35 @@ ENDLOOP.
 ~~~~
 DATA(lv_total) = REDUCE i( INIT sum = 0 FOR wa IN lt_table NEXT sum = sum + wa ).
 ~~~~
+
+![image](https://github.com/user-attachments/assets/f2af4859-6851-4b35-88c4-e62dbd862ffe)
+
+Exemplo prático:
+
+![image](https://github.com/user-attachments/assets/40938266-90bf-4a9c-8ab1-7fc492f8088e)
+
+![image](https://github.com/user-attachments/assets/81e0fafb-b61b-40cf-8211-c6fea1626a9c)
+
+Com Where: 
+
+![image](https://github.com/user-attachments/assets/30bed9da-7fb4-44c1-929f-de29fb13fa9f)
+
+![image](https://github.com/user-attachments/assets/524ff551-6557-4e95-9144-fa12be7b1ed5)
+
+Tabela dentro de tabela:
+
+![image](https://github.com/user-attachments/assets/68f0af97-101d-4d16-ab11-274fcc52c4c5)
+
+![image](https://github.com/user-attachments/assets/330223d7-8eb0-45b5-8886-dfcf949faaa0)
+
+Resultado de tipo estruturado:
+
+![image](https://github.com/user-attachments/assets/61ba9330-173c-4e7c-8a84-9cdfca9678d3)
+
+Exemplo fatorial, sem uso de tabela interna:
+
+![image](https://github.com/user-attachments/assets/5ddbd489-4440-4cf1-a93f-99f2099a498b)
+
 
 ## 8. New Open SQL Syntax 📜
 Permite a declaração inline de variáveis em comandos SQL.
@@ -200,6 +240,18 @@ DATA(lv_result) = SWITCH #( lv_input
                             ELSE 'Unknown' ).
 ~~~~
 
+Uso em entrada de método:
+
+![image](https://github.com/user-attachments/assets/0eef27d8-a8f2-4376-9581-56ad1986dc93)
+
+Retorno de método:
+
+![image](https://github.com/user-attachments/assets/41e1d195-b6a3-4fa8-8449-919d37926eec)
+
+Uso com Value:
+
+![image](https://github.com/user-attachments/assets/dcdf1e6b-e637-45c0-8e81-549954b52404)
+
 ## 13. COND Operator ⚙️
 Cria expressões condicionais de forma declarativa.
 
@@ -222,6 +274,19 @@ DATA(lv_result) = COND #( WHEN lv_input = 'A' THEN 'Alpha'
                           WHEN lv_input = 'B' THEN 'Beta'
                           ELSE 'Unknown' ).
 ~~~~
+
+Uso em entrada de método:
+
+![image](https://github.com/user-attachments/assets/cb9a7b4f-3447-4884-a593-c179cd9d0a6e)
+
+retorno de método:
+
+![image](https://github.com/user-attachments/assets/f3ab5983-1e20-4513-8680-045ad2de97ff)
+
+Preenchimento com Value:
+
+![image](https://github.com/user-attachments/assets/2b595813-a412-4446-b6d5-5271130bfc47)
+
 
 ## 14. NEW Operator 🌟
 Simplifica a criação de instâncias de objetos.
@@ -373,6 +438,23 @@ MOVE-CORRESPONDING ls_old TO ls_new.
 DATA(ls_new) = CORRESPONDING #( ls_old ).
 ~~~~
 
+Manter valor não correpondente:
+
+![image](https://github.com/user-attachments/assets/0dd0a466-9da5-41c1-b122-d1826f3ddf04)
+
+Mapping:
+
+![image](https://github.com/user-attachments/assets/faeb125c-1df7-41ea-9760-634c141a3432)
+
+Except para não ver um campo específico:
+
+![image](https://github.com/user-attachments/assets/3e63dbec-2b19-49a6-a123-0d6db53b021b)
+
+Remover Duplicados:
+
+![image](https://github.com/user-attachments/assets/d5d00452-205e-4895-9d6f-d727aa950992)
+
+
 ## 22. LINES() 📏
 Retorna o número de linhas de uma tabela interna.
 
@@ -441,6 +523,8 @@ lv_int = lv_string+0.
 ~~~~
 DATA(lv_int) = CONV i( lv_string ).
 ~~~~
+
+![image](https://github.com/user-attachments/assets/d0246408-6a5a-49b4-ab85-4b732f8354f1)
 
 ## 26. CAST 🔄
 Converte explicitamente classes em hierarquias de herança.
