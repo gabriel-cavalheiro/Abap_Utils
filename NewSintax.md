@@ -391,15 +391,96 @@ DATA(lv_result) = SWITCH #( lv_input
 
 Uso em entrada de método:
 
-![image](https://github.com/user-attachments/assets/0eef27d8-a8f2-4376-9581-56ad1986dc93)
+**Antes:**
+```abap
+
+CASE v_promocao.
+  WHEN 'X'.
+    v_mode = 'A'.
+  WHEN ''.
+    v_mode = 'B'.
+ENDCASE.
+
+v_com_desc=
+  desconto(
+    iv_price = v_cheio
+    iv_mode  = v_mode
+
+```
+
+**Depois:**
+```abap
+
+v_com_desc=
+  desconto(
+    iv_price = v_cheio
+    iv_mode  = SWITCH #(
+        v_promocao
+        WHEN 'X' THEN 'A'
+        WHEN '' THEN  'B'
+      )
+).
+```
 
 Retorno de método:
 
-![image](https://github.com/user-attachments/assets/41e1d195-b6a3-4fa8-8449-919d37926eec)
+**Antes:**
+```abap
 
-Uso com Value:
+CASE get_mode( ).
+  WHEN 'A'.
+    v_com_desc = v_cheio * '0.8'.
+  WHEN OTHERS.
+    v_com_desc = v_cheio * '0.9'.
+ENDCASE.
+```
+<H3><b>Depois:</b></H3>
 
-![image](https://github.com/user-attachments/assets/dcdf1e6b-e637-45c0-8e81-549954b52404)
+```abap
+
+v_com_desc = SWITCH #(
+        get_mode( ).
+        WHEN 'A' THEN v_cheio * '0.8'
+        ELSE v_ceio * '0.9
+      ).
+```
+<h3><b>Uso com Value:</b></h3>
+
+<h4><b>Antes:</b></h4>
+
+```abap
+CASE v_vlr.
+  WHEN 1.
+    DATA(s_entry1) =
+      VALUE y_entry(
+        valor = v_vlr
+        descr = 'Um'
+      ).
+  WHEN 2.
+    s_entry1 =
+      VALUE y_entry(
+        valor = v_vlr
+        descr = 'Dois'
+      ).
+ENDCASE.
+
+```
+
+<h4><b>Novo:</b></h4>
+
+```abap
+DATA(s_entry1) =
+  VALUE y_entry(
+    valor = v_vlr
+    descr =
+      SWITCH #(
+        v_vlr
+        WHEN 1 THEN 'Um'
+        WHEN 2 THEN 'Dois'
+      )
+).
+```
+
 
 ## 13. COND Operator ⚙️
 Cria expressões condicionais de forma declarativa.
@@ -424,18 +505,114 @@ DATA(lv_result) = COND #( WHEN lv_input = 'A' THEN 'Alpha'
                           ELSE 'Unknown' ).
 ```
 
-Uso em entrada de método:
+<h3>
+  <b>Uso em entrada de método:</b>
+</h3>
 
-![image](https://github.com/user-attachments/assets/cb9a7b4f-3447-4884-a593-c179cd9d0a6e)
+<h4><b>Antes:</b></h4>
 
-retorno de método:
+```abap
+DATA v_cheio TYPE f.
+DATA v_com_desc TYPE f.
+v_cheio = 150.
+IF ( v_cheio > 100 ).
+  v_com_desc = desconto(
+    iv_price = v_cheio
+    iv_mode = 'A'
+  ).
+ELSE.
+  v_com_desc = desconto(
+    iv_price = v_cheio
+    iv_mode = 'B'
+  ).
+ENDIF.
+```
 
-![image](https://github.com/user-attachments/assets/f3ab5983-1e20-4513-8680-045ad2de97ff)
+<h4><b>Novo:</b></h4>
 
-Preenchimento com Value:
+```abap
+DATA v_cheio TYPE f.
+v_cheio = 150.
+DATA(v_com_desc) = desconto(
+  iv_price = v_cheio
+  iv_mode = COND #(
+    WHEN v_cheio > 100
+    THEN 'A' 
+    ELSE 'B'
+  )
+).
 
-![image](https://github.com/user-attachments/assets/2b595813-a412-4446-b6d5-5271130bfc47)
+```
 
+<h3>
+  <b>retorno de método:</b>
+</h3>
+
+<h4><b>Antes:</b></h4>
+
+```abap
+DATA v_cheio TYPE f.
+DATA v_com_desc TYPE f.
+
+v_cheio = 150.
+
+IF get_mode( ) = 'A'.
+  v_com_desc = v_cheio * '0.8'.
+ELSE.
+  v_com_desc = v_cheio * '0.9'.
+ENDIF.
+```
+
+<h4><b>Novo:</b></h4>
+
+```abap
+DATA v_cheio TYPE f.
+DATA v_com_desc TYPE f.
+
+v_cheio = 150.
+
+v_com_desc =
+  COND #(
+    WHEN get_mode( ) = 'A'
+    THEN v_cheio * '0.8'
+    ELSE v_cheio * '0.9'
+  ).
+```
+
+<h3>
+  <b>Preenchimento com Value:</b>
+</h3>
+
+<h4><b>Antes:</b></h4>
+
+```abap
+IF ( v_valor1 MOD 2 = 0 ).
+  DATA(s_entry1) = VALUE y_entry(
+    valor = v_valor1
+    tipo  = 'Par'
+  ).
+ELSE.
+  s_entry1 = VALUE y_entry(
+    valor = v_valor1
+    tipo  = 'Impar'
+  ).
+ENDIF.
+
+```
+
+<h4><b>Novo:</b></h4>
+
+```abap
+DATA(s_entry1) = 
+  VALUE y_entry(
+    valor = v_valor1
+    tipo  = COND #(
+      WHEN v_valor1 MOD 2 = 0
+      THEN 'Par' 
+      ELSE 'Impar'
+    )
+  ).
+```
 
 ## 14. NEW Operator 🌟
 Simplifica a criação de instâncias de objetos.
