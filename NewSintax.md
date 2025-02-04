@@ -697,22 +697,27 @@ DATA(lv_string) = `This is a string with a single backslash \`.
 ```
 
 ## 20. XSDBOOL 🧮
-Converte expressões booleanas de forma direta.
+Converte expressões lógicas em valores booleanos.
 
 **Antigo:**
 
 ```abap
-IF lv_value = 'X'.
-  lv_bool = abap_true.
+DATA lv_result TYPE abap_bool.
+
+IF 5 > 3.
+  lv_result = abap_true.
 ELSE.
-  lv_bool = abap_false.
+  lv_result = abap_false.
 ENDIF.
+WRITE: / 'Resultado:', lv_result.
 ```
 
 **Novo:**
 
 ```abap
-DATA(lv_bool) = xsdbool( lv_value = 'X' ).
+DATA(lv_result) = xsdbool( 5 > 3 ).
+
+WRITE: / 'Resultado:', lv_result.
 ```
 
 ## 21. CORRESPONDING 🔄
