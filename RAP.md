@@ -12,6 +12,8 @@
 
 <https://software-heroes.com/en/blog/abap-rap-popup-mandatory-fields>
 
+<https://www.mindsetconsulting.com/restful-abap-programming-model-fiori-rap/>
+
 ## Criando objetos RAP com gerador ADT integrado no Eclipse
 
 <https://medium.com/@vitorkazuma/criando-crud-rap-com-gerador-adt-integrado-em-poucos-cliques-2396925d69eb>
