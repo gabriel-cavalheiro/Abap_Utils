@@ -14,4 +14,4 @@
 
 ## Criando objetos RAP com gerador ADT integrado no Eclipse
 
-<a>https://medium.com/@vitorkazuma/criando-crud-rap-com-gerador-adt-integrado-em-poucos-cliques-2396925d69eb<a/>
+<https://medium.com/@vitorkazuma/criando-crud-rap-com-gerador-adt-integrado-em-poucos-cliques-2396925d69eb>
