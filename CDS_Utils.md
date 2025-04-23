@@ -2,6 +2,10 @@
 
 ## Sites Utéis
 
+<https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/f8/af07bb0770414bb38a25cae29a12e9/content.htm?no_cache=true>
+
+<https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/fb/cd3a59a94148f6adad80b9c97304ff/content.htm?no_cache=true>
+
 
 ## Remover dados duplicados da seleção da CDS com select distinct 🧮
 
