@@ -14,6 +14,8 @@
 
 <https://www.mindsetconsulting.com/restful-abap-programming-model-fiori-rap/>
 
+<https://www.linkedin.com/pulse/enhance-your-abap-rap-development-entity-manipulation-tiwari/>
+
 ## Criando objetos RAP com gerador ADT integrado no Eclipse
 
 <https://medium.com/@vitorkazuma/criando-crud-rap-com-gerador-adt-integrado-em-poucos-cliques-2396925d69eb>
