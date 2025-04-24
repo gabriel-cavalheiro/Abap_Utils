@@ -1,5 +1,9 @@
 # Novos Comandos de Sintaxe ABAP no SAP 7.4 🚀
 
+## Links Utéis:
+
+<https://community.sap.com/t5/technology-blogs-by-members/abap-7-40-quick-reference/ba-p/13287523>
+
 ## 1. Inline Data Declarations ✍️
 Permite declarar e inicializar variáveis em uma única linha.
 
