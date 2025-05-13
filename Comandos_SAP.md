@@ -220,6 +220,38 @@ FORM zf_auth  USING  p_bukrs      TYPE bukrs
 ENDFORM.
 ~~~~
 
+### Form para Criar Dinamicamente Cláusula SQL para Funções
+~~~
+FORM zf_monta_where  TABLES   p_s_bukrs STRUCTURE s_bukrs
+                              p_s_gjahr STRUCTURE s_gjahr
+                     USING    p_c_k
+                     CHANGING p_l_where_clause.
+
+  DATA(l_bukrs_list) = REDUCE string(
+  INIT result_str = ``
+  FOR ls_bukrs IN p_s_bukrs WHERE ( sign = 'I' AND option = 'EQ' AND low IS NOT INITIAL )
+  NEXT result_str = |{ result_str }{ COND string( WHEN result_str IS INITIAL THEN '' ELSE ',' ) }'{ ls_bukrs-low }'| ).
+
+  DATA(l_gjahr_list) = REDUCE string(
+  INIT result_str = ``
+  FOR ls_gjahr IN p_s_gjahr WHERE ( sign = 'I' AND option = 'EQ' AND low IS NOT INITIAL )
+  NEXT result_str = |{ result_str }{ COND string( WHEN result_str IS INITIAL THEN '' ELSE ',' ) }'{ ls_gjahr-low }'| ).
+
+  " Montar a cláusula WHERE principal
+  p_l_where_clause = |BELNR = IT_FOR_ALL_ENTRIES-BELNR|.
+
+  IF l_bukrs_list IS NOT INITIAL.
+    p_l_where_clause = |{ p_l_where_clause } AND BUKRS IN ( { l_bukrs_list } )|.
+  ENDIF.
+
+  IF l_gjahr_list IS NOT INITIAL.
+    p_l_where_clause = |{ p_l_where_clause } AND GJAHR IN ( { l_gjahr_list } )|.
+  ENDIF.
+
+  p_l_where_clause = |{ p_l_where_clause } AND KOART = '{ p_c_k }'|.
+
+ENDFORM.   "zf_monta_where
+~~~
 ___
 
 ### Principais Transações
