@@ -9,11 +9,12 @@
 | Ação                                        | Atalho                     |
 |----------------------------------------------|----------------------------|
 | **Ativar objeto ABAP**                       | Ctrl + F3                  |
-| **Formatar código**                          | Ctrl + Shift + F           |
+| **Formatar código**                          | Shift + F1                 |
 | **Assistente de código (auto complete)**     | Ctrl + Espaço              |
 | **Quick Fix (correção rápida)**              | Ctrl + 1                   |
 | **Renomear**                                | Alt + Shift + R ou F2      |
-| **Comentar/descomentar linha**               | Ctrl + 7                   |
+| **Comentar/descomentar linha**               | Ctrl + < ou Ctrl + >      |
+| **Comentar/descomentar bloco**               | Ctrl + 7                   |
 | **Buscar palavra no editor**                 | Ctrl + F                   |
 | **Buscar no repositório**                    | Ctrl + Shift + F3          |
 | **Abrir objeto ABAP**                        | Ctrl + Shift + A           |
