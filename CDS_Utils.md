@@ -6,6 +6,9 @@
 
 <https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/fb/cd3a59a94148f6adad80b9c97304ff/content.htm?no_cache=true>
 
+### Access Control
+
+<https://medium.com/sap-innovation-hub/understanding-access-controls-and-authorization-in-cds-views-7b80d16aea92>
 
 ## Remover dados duplicados da seleção da CDS com select distinct 🧮
 
