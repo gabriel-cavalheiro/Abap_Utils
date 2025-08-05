@@ -19,6 +19,14 @@ define view entity Z_CDS_EX
 
 ```
 
+## Concatenar campos de nome
+
+```cds
+
+cast(substring(replace(concat(adrc.name1, concat(' &@', adrc.name2)), '&@', ''),1,80) as adfullname ) as FullName,
+
+```
+
 ## Função para conversão de moedas e unidade de medidas 💵🪙📐
 
 ```cds
