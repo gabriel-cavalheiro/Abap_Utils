@@ -1,0 +1,711 @@
+tabelas:
+
+@EndUserText.label : 'Tabela de Demandas Funcionais'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #RESTRICTED
+define table ztb_gest_func {
+  key client            : mandt not null;
+  key demand_uuid       : sysuuid_x16 not null;
+  demand_id             : numc5;
+  title                 : string_data;
+  description           : string_data;
+  modulo                : char3;
+  subarea               : char30;
+  desenvolvedor         : uname;
+  mudanca               : char20;
+  request               : char20;
+  status                : char15;
+  tipodemanda           : char10;
+  desexterna            : char1;
+  hrsconsultest         : abap.dec(5,2);
+  hrsinternasest        : abap.dec(5,2);
+  hrsabap               : abap.dec(5,2);
+  hrsfiori              : abap.dec(5,2);
+  valorgestao           : abap.dec(5,2);
+  prioridade            : char1;
+  created_at            : timestamp;
+  created_by            : uname;
+  last_changed_by       : syuname;
+  last_changed_at       : timestampl;
+  local_last_changed_at : timestampl;
+  has_attachment        : abap_boolean;
+
+}
+
+@EndUserText.label : 'Tabela de Anexos de Demandas'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #RESTRICTED
+define table ztbt_gest_files {
+  key client          : mandt not null;
+  key attachment_uuid : sysuuid_x16 not null;
+  key demand_uuid     : sysuuid_x16 not null;
+  filename            : string_data;
+  mimetype            : string_data;
+  fize_size           : abap.int8;
+  file_content        : zdeabap_file;
+  created_at          : timestamp;
+  created_by          : uname;
+
+}
+
+@EndUserText.label : 'Draft table for entity ZICDS_GESTAO_FILES'
+@AbapCatalog.enhancement.category : #EXTENSIBLE_ANY
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #RESTRICTED
+define table ztbtd_gest_files {
+  key mandt          : mandt not null;
+  key attachmentuuid : sysuuid_x16 not null;
+  key demanduuid     : sysuuid_x16 not null;
+  filename           : string_data;
+  mimetype           : string_data;
+  filecontent        : zdeabap_file;
+  filesize           : abap.int8;
+  createdat          : timestamp;
+  createdby          : uname;
+  "%admin"           : include sych_bdl_draft_admin_inc;
+
+}
+
+@EndUserText.label : 'Draft table for entity ZICDS_GEST_FUNC'
+@AbapCatalog.enhancement.category : #EXTENSIBLE_ANY
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #RESTRICTED
+define table ztbd_gest_fun {
+  key mandt           : mandt not null;
+  key demanduuid      : sysuuid_x16 not null;
+  demandid            : numc5;
+  title               : string_data;
+  description         : string_data;
+  modulo              : char3;
+  subarea             : char30;
+  desenvolvedor       : uname;
+  mudanca             : char20;
+  request             : char20;
+  status              : char15;
+  tipodemanda         : char10;
+  desexterna          : char1;
+  hrsconsultest       : abap.dec(5,2);
+  hrsinternasest      : abap.dec(5,2);
+  hrsabap             : abap.dec(5,2);
+  hrsfiori            : abap.dec(5,2);
+  valorgestao         : abap.dec(5,2);
+  prioridade          : char1;
+  createdat           : timestamp;
+  createdby           : uname;
+  lastchangedby       : syuname;
+  lastchangedat       : timestampl;
+  locallastchangedat  : timestampl;
+  hasattachment       : abap_boolean;
+  prioritycriticality : abap.int1;
+  statuscriticality   : abap.int1;
+  countiniciar        : abap.int4;
+  countemandamento    : abap.int4;
+  countemteste        : abap.int4;
+  countencerrado      : abap.int4;
+  countcancelado      : abap.int4;
+  "%admin"            : include sych_bdl_draft_admin_inc;
+
+}
+
+CDS´S:
+
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Composition - Demandas Funcionais'
+@Metadata.ignorePropagatedAnnotations: false
+@ObjectModel.usageType:{
+  serviceQuality: #X,
+  sizeCategory: #S,
+  dataClass: #MIXED
+}
+define root view entity ZICDS_GEST_FUNC
+  as select from ztb_gest_func
+  composition [0..*] of ZICDS_GESTAO_FILES as _Anexos
+{
+  key demand_uuid            as DemandUuid,
+      demand_id              as DemandId,
+      title                  as Title,
+      description            as Description,
+      modulo                 as Modulo,
+      subarea                as Subarea,
+      desenvolvedor          as Desenvolvedor,
+      mudanca                as Mudanca,
+      request                as Request,
+      status                 as Status,
+      tipodemanda            as Tipodemanda,
+      desexterna             as Desexterna,
+      hrsconsultest          as Hrsconsultest,
+      hrsinternasest         as Hrsinternasest,
+      hrsabap                as Hrsabap,
+      hrsfiori               as Hrsfiori,
+      valorgestao            as Valorgestao,
+      prioridade             as Prioridade,
+      @Semantics.systemDateTime.createdAt: true
+      created_at             as CreatedAt,
+      @Semantics.user.createdBy: true
+      created_by             as CreatedBy,
+      @Semantics.user.lastChangedBy: true
+      last_changed_by        as LastChangedBy,
+      @Semantics.systemDateTime.lastChangedAt: true
+      last_changed_at        as LastChangedAt,
+      @Semantics.systemDateTime.localInstanceLastChangedAt: true
+      local_last_changed_at  as LocalLastChangedAt,
+      has_attachment         as HasAttachment,
+
+      /* Campos virtuais para criticality */
+      case prioridade
+        when '1' then 1    // Alta - Vermelho
+        when '2' then 2    // Média - Amarelo
+        when '3' then 3    // Baixa - Verde
+        else 0
+      end                    as PriorityCriticality,
+
+//      // 1 = Iniciar, 0 = demais
+//      @ObjectModel.readOnly: true
+//      cast(
+//        case
+//          when status = 'INICIAR' then 1
+//          else 0
+//        end
+//        as abap.int4
+//      )                      as IsIniciar,
+
+      case status
+        when 'CANCELADO'    then 1 // Vermelho
+        when 'INICIAR'      then 2 // Amarelo
+        when 'EM ANDAMENTO' then 3 // Amarelo
+        when 'EM TESTE'     then 2 // Amarelo
+        when 'ENCERRADO'    then 3 // Verde
+        else 0
+      end                    as StatusCriticality,
+
+      /* Campos virtuais para contagem de status (preenchidos via determination) */
+      cast( 0 as abap.int4 ) as CountIniciar,
+      cast( 0 as abap.int4 ) as CountEmAndamento,
+      cast( 0 as abap.int4 ) as CountEmTeste,
+      cast( 0 as abap.int4 ) as CountEncerrado,
+      cast( 0 as abap.int4 ) as CountCancelado,
+
+      _Anexos
+}
+
+
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Basic - Arquivos de Especificação'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZICDS_GESTAO_FILES
+  as select from ztbt_gest_files
+  association to parent ZICDS_GEST_FUNC as _Demanda on $projection.DemandUUID = _Demanda.DemandUuid
+{
+  key attachment_uuid as AttachmentUUID,
+  key demand_uuid     as DemandUUID,
+      filename        as Filename,
+      mimetype        as Mimetype,
+      @Semantics.largeObject: {
+          mimeType: 'Mimetype',
+          fileName: 'Filename',
+          contentDispositionPreference: #INLINE,
+          acceptableMimeTypes: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+      }
+      file_content    as FileContent,
+      fize_size       as FileSize,
+      created_at      as CreatedAt,
+      created_by      as CreatedBy,
+
+      /* Associações */
+      _Demanda
+}
+
+
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Consumption - Gestão de Demandas'
+@Metadata.ignorePropagatedAnnotations: false
+@Metadata.allowExtensions: true
+define root view entity ZCCDS_GEST_FUNC
+  as projection on ZICDS_GEST_FUNC
+{
+  key DemandUuid,
+      @Search.defaultSearchElement: true
+      DemandId,
+      @Search.defaultSearchElement: true
+      Title,
+      Description,
+      @Search.defaultSearchElement: true
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZICDS_GEST_FUNC', element: 'Modulo' } }]
+      Modulo,
+      Subarea,
+      Desenvolvedor,
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZICDS_GEST_FUNC', element: 'Mudanca' } }]
+      Mudanca,
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZICDS_GEST_FUNC', element: 'Request' } }]
+      Request,
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZICDS_GEST_FUNC', element: 'Status' } }]
+      Status,
+      Tipodemanda,
+      Desexterna,
+      Hrsconsultest,
+      Hrsinternasest,
+      Hrsabap,
+      Hrsfiori,
+      Valorgestao,
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZICDS_GEST_FUNC', element: 'Prioridade' } }]
+      Prioridade,
+      CreatedAt,
+      CreatedBy,
+      LastChangedBy,
+      LastChangedAt,
+      LocalLastChangedAt,
+      HasAttachment,
+      @UI.hidden: true
+      PriorityCriticality,
+      @UI.hidden: true
+      StatusCriticality,
+//      @UI.hidden: true
+//      IsIniciar,
+      @UI.hidden: true
+      CountIniciar,
+      @UI.hidden: true
+      CountEmAndamento,
+      @UI.hidden: true
+      CountEmTeste,
+      @UI.hidden: true
+      CountEncerrado,
+      @UI.hidden: true
+      CountCancelado,
+      /* Associations */
+      _Anexos : redirected to composition child ZCCDS_GEST_FILE
+}
+
+
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Consumption - Arquivos Demandas'
+@Metadata.ignorePropagatedAnnotations: false
+@Metadata.allowExtensions: true
+define view entity ZCCDS_GEST_FILE
+  as projection on ZICDS_GESTAO_FILES
+{
+  key AttachmentUUID,
+  key DemandUUID,
+      @Search.defaultSearchElement: true
+      Filename,
+      Mimetype,
+      FileContent,
+      FileSize,
+      CreatedAt,
+      CreatedBy,
+      /* Associations */
+      _Demanda : redirected to parent ZCCDS_GEST_FUNC
+}
+
+BEHAVIOR DEFINITION:
+
+managed implementation in class zbp_cds_gest_func unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZICDS_GEST_FUNC alias Demanda
+persistent table ztb_gest_func
+draft table ztbd_gest_fun
+lock master total etag LocalLastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+
+  field ( readonly, numbering : managed ) DemandUuid;
+
+  // Campos obrigatórios
+  field ( mandatory ) Title, Mudanca, Modulo, Request, Prioridade;
+
+  // --- Campos Somente Leitura ---
+  field ( readonly : update ) DemandID;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+
+
+  determination assignId on save { create; }
+
+  // Associação para anexos
+  association _Anexos { create; }
+
+  // Mapeamento
+  mapping for ztb_gest_func
+  {
+    DemandUUID = demand_uuid;
+    DemandID = demand_id;
+    Title = title;
+    Description = description;
+    Modulo = modulo;
+    Subarea = subarea;
+    Desenvolvedor = desenvolvedor;
+    Mudanca = mudanca;
+    Request = request;
+    Status = status;
+    Tipodemanda = tipodemanda;
+    Desexterna = desexterna;
+    Hrsconsultest = hrsconsultest;
+    Hrsinternasest = hrsinternasest;
+    Hrsabap = hrsabap;
+    Hrsfiori = hrsfiori;
+    Valorgestao = valorgestao;
+    Prioridade = prioridade;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    LastChangedAt = last_changed_at;
+    LastChangedBy = last_changed_by;
+    HasAttachment = has_attachment;
+  }
+}
+
+define behavior for ZICDS_GESTAO_FILES alias Anexo
+persistent table ztbt_gest_files
+draft table ztbtd_gest_files
+lock dependent by _Demanda
+authorization dependent by _Demanda
+etag master CreatedAt
+{
+  update;
+  delete;
+
+  field ( readonly, numbering : managed ) AttachmentUUID;
+
+  // Campos obrigatórios
+  field ( mandatory ) Filename, Mimetype;
+
+  // Campos somente leitura
+  field ( readonly ) DemandUUID, CreatedAt, CreatedBy, FileSize;
+
+  // Operações de stream
+  field ( readonly ) FileContent;
+
+  // Associação para a demanda pai
+  association _Demanda;
+
+  // Mapeamento
+  mapping for ztbt_gest_files
+  {
+    AttachmentUUID = attachment_uuid;
+    DemandUUID = demand_uuid;
+    Filename = filename;
+    Mimetype = mimetype;
+    FileContent = file_content;
+    FileSize = fize_size;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+  }
+}
+
+CLASSE IMPLEMENTAÇÃO BEHAVIOR:
+
+CLASS lhc_Demanda DEFINITION INHERITING FROM cl_abap_behavior_handler.
+  PRIVATE SECTION.
+
+    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
+      IMPORTING keys REQUEST requested_authorizations FOR Demanda RESULT result.
+    METHODS assignid FOR DETERMINE ON SAVE
+      IMPORTING keys FOR demanda~assignId.
+
+ENDCLASS.
+
+CLASS lhc_Demanda IMPLEMENTATION.
+
+  METHOD get_instance_authorizations.
+  ENDMETHOD.
+
+
+  METHOD assignId.
+
+    READ ENTITIES OF zicds_gest_func IN LOCAL MODE
+        ENTITY Demanda
+        FIELDS ( DemandId )
+        WITH CORRESPONDING #( keys )
+        RESULT DATA(lt_result).
+
+    LOOP AT lt_result ASSIGNING FIELD-SYMBOL(<fs_result>).
+
+      IF <fs_result>-DemandId IS INITIAL.
+
+        DATA: l_seq      TYPE numc5,
+              l_range_nr TYPE inri-nrrangenr VALUE '01'.
+
+        CALL FUNCTION 'NUMBER_GET_NEXT'
+          EXPORTING
+            object      = 'ZDMND'
+            nr_range_nr = l_range_nr
+          IMPORTING
+            number      = l_seq
+          EXCEPTIONS
+            OTHERS      = 1.
+        ASSERT sy-subrc = 0.
+
+        <fs_result>-DemandId = |{ l_seq WIDTH = 5 PAD = '0' }|.
+
+      ENDIF.
+    ENDLOOP.
+
+    MODIFY ENTITIES OF zicds_gest_func IN LOCAL MODE
+    ENTITY Demanda
+    UPDATE FIELDS ( DemandId )
+    WITH VALUE #( FOR ls_result IN lt_result
+                (   DemandUuid = ls_result-DemandUuid
+                    DemandId = ls_result-DemandId ) )
+                    MAPPED DATA(ls_mapped)
+                    FAILED DATA(ls_failed)
+                    REPORTED DATA(lr_reported).
+
+    reported-demanda = CORRESPONDING #( lr_reported-demanda ).
+
+  ENDMETHOD.
+
+ENDCLASS.
+
+PROJECTION BEHAVIOR:
+
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZCCDS_GEST_FUNC //alias <alias_name>
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use association _Anexos { create; }
+}
+
+define behavior for ZCCDS_GEST_FILE //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _Demanda;
+}
+
+SERVICE BINDING:
+
+@EndUserText.label: 'UI - Gestão de Demandas Funcionais'
+define service ZUI_GESTAO_DEMAND_FUNC {
+  expose ZCCDS_GEST_FILE;
+  expose ZCCDS_GEST_FUNC;
+}
+
+metadata extensions:
+
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: {
+    typeName: 'Anexo',
+    typeNamePlural: 'Anexos',
+    title: { value: 'Filename' }
+  }
+  }
+
+annotate view ZCCDS_GEST_FILE with
+{
+  @UI.facet: [
+    { id: 'Anexo', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, label: 'Anexo', position: 10 }
+  ]
+
+  @UI.lineItem: [{ position: 10, importance: #HIGH, label: 'Nome do Arquivo'  }]
+  @UI.identification: [{ position: 10 }]
+  Filename;
+
+  @UI.lineItem: [{ position: 20, importance: #MEDIUM, label: 'Tipo MIME' }]
+  @UI.identification: [{ position: 20 }]
+  Mimetype;
+
+  @UI.lineItem: [{ position: 30, importance: #MEDIUM, label: 'Arquivo'}]
+  @UI.identification: [{ position: 30 }]
+  FileContent;
+
+  @UI.lineItem: [{ position: 40, importance: #LOW, label: 'Enviado por' }]
+  @UI.identification: [{ position: 40 }]
+  CreatedBy;
+
+  @UI.lineItem: [{ position: 50, importance: #LOW, label: 'Enviado em' }]
+  @UI.identification: [{ position: 50 }]
+  CreatedAt;
+}
+
+////////////////////////////////////////////////////////////////////
+
+@Metadata.layer: #CORE
+
+  //──────────────────────────────────────────────────────────
+  // Header da Object Page
+  //──────────────────────────────────────────────────────────
+@UI.headerInfo: {
+  typeName       : 'Demanda Funcional',
+  typeNamePlural : 'Demandas Funcionais',
+  typeImageUrl   : 'sap-icon://activity-items',
+  title          : { type: #STANDARD, label: 'Título', value: 'Title' }
+}
+
+@UI.presentationVariant: [{
+ sortOrder: [
+    {by: 'PriorityCriticality', direction: #ASC}
+],
+ visualizations: [{ element: 'Prioridade' }] }]
+
+annotate entity ZCCDS_GEST_FUNC with
+{
+
+
+  //──────────────────────────────────────────────────────────
+  // DataPoints para Contagem de Status
+  //──────────────────────────────────────────────────────────
+  //  @UI.dataPoint: { title: 'A Iniciar', criticality: 'CountIniciar' }
+  //  CountIniciar;
+  //
+  //  @UI.dataPoint: { title: 'Em Andamento', criticality: 'CountEmAndamento'}
+  //  CountEmAndamento;
+  //
+  //  @UI.dataPoint: { title: 'Em Teste',   criticality: 'CountEmTeste' }
+  //  CountEmTeste;
+  //
+  //  @UI.dataPoint: { title: 'Encerrado',  criticality: 'CountEncerrado' }
+  //  CountEncerrado;
+  //
+  //  @UI.dataPoint: { title: 'Cancelado',  criticality: 'CountCancelado' }
+  //  CountCancelado;
+
+  //──────────────────────────────────────────────────────────
+  // Object Page Facets – Nível Superior
+  //──────────────────────────────────────────────────────────
+  @UI.facet: [
+    { id: 'GeneralInfo', purpose: #STANDARD, type: #COLLECTION,         label: 'Informações Gerais', position: 10 },
+    { id: 'Attachments', purpose: #STANDARD, type: #LINEITEM_REFERENCE, label: 'Anexos',             position: 20, targetElement: '_Anexos' },
+    { id: 'DemandDetails',  parentId: 'GeneralInfo', type: #FIELDGROUP_REFERENCE, label: 'Detalhes da Demanda',   position: 10, targetQualifier: 'DemandDetailsGroup' },
+    { id: 'StatusPriority', parentId: 'GeneralInfo', type: #FIELDGROUP_REFERENCE, label: 'Status e Prioridade',   position: 20, targetQualifier: 'StatusPriorityGroup' },
+    { id: 'AdminData',      parentId: 'GeneralInfo', type: #FIELDGROUP_REFERENCE, label: 'Dados Administrativos', position: 30, targetQualifier: 'AdminDataGroup' }
+  ]
+
+
+
+  //──────────────────────────────────────────────────────────
+  // DemandID
+  //──────────────────────────────────────────────────────────
+  @UI.lineItem:       [ { position: 10, label: 'ID Demanda' } ]
+  @UI.selectionField: [ { position: 10 } ]
+  @UI.fieldGroup:     [ { qualifier: 'DemandDetailsGroup', position: 10, label: 'ID Demanda' } ]
+  @UI.identification: [ { position: 10, label: 'ID Demanda' } ]
+  DemandId;
+
+  //──────────────────────────────────────────────────────────
+  // Title
+  //──────────────────────────────────────────────────────────
+  @UI.lineItem:       [ { position: 20, label: 'Título' } ]
+  @UI.selectionField: [ { position: 20 } ]
+  @UI.fieldGroup:     [ { qualifier: 'DemandDetailsGroup', position: 20, label: 'Título' } ]
+  @UI.identification: [ { position: 20, label: 'Título' } ]
+  Title;
+
+  //──────────────────────────────────────────────────────────
+  // Description
+  //──────────────────────────────────────────────────────────
+  @UI.multiLineText: true
+  @UI.lineItem:       [ { position: 25, label: 'Título' } ]
+  @UI.fieldGroup: [ { qualifier: 'DemandDetailsGroup', position: 30, label: 'Descrição'} ]
+  Description;
+
+  //──────────────────────────────────────────────────────────
+  // Módulo
+  //──────────────────────────────────────────────────────────
+  @UI.lineItem:       [ { position: 30, label: 'Módulo' } ]
+  @UI.selectionField: [ { position: 30 } ]
+  @UI.fieldGroup:     [ { qualifier: 'DemandDetailsGroup', position: 40, label: 'Módulo' } ]
+  Modulo;
+
+  //──────────────────────────────────────────────────────────
+  // Mudança
+  //──────────────────────────────────────────────────────────
+  @UI.lineItem:   [ { position: 40, label: 'Mudança' } ]
+  @UI.fieldGroup: [ { qualifier: 'DemandDetailsGroup', position: 60, label: 'Mudança' } ]
+  Mudanca;
+
+  //──────────────────────────────────────────────────────────
+  // Request
+  //──────────────────────────────────────────────────────────
+  @UI.lineItem:   [ { position: 50, label: 'Request' } ]
+  @UI.fieldGroup: [ { qualifier: 'DemandDetailsGroup', position: 70, label: 'Request' } ]
+  Request;
+
+  //──────────────────────────────────────────────────────────
+  // Status
+  //──────────────────────────────────────────────────────────
+  @UI.lineItem:       [ { position: 60, label: 'Status',    criticality: 'StatusCriticality' } ]
+  @UI.selectionField: [ { position: 40 } ]
+  @UI.fieldGroup:     [ { qualifier: 'StatusPriorityGroup', position: 10, label: 'Status', criticality: 'StatusCriticality' } ]
+  @UI.statusInfo:     [ { position: 10, label: 'Status',    value: 'Status',    criticality: 'StatusCriticality' } ]
+  Status;
+
+  //──────────────────────────────────────────────────────────
+  // Prioridade
+  //──────────────────────────────────────────────────────────
+  @UI.lineItem:       [ { position: 70, label: 'Prioridade', criticality: 'PriorityCriticality' } ]
+  @UI.selectionField: [ { position: 50 } ]
+  @UI.fieldGroup:     [ { qualifier: 'StatusPriorityGroup', position: 20, label: 'Prioridade', criticality: 'PriorityCriticality' } ]
+  Prioridade;
+
+  //──────────────────────────────────────────────────────────
+  // Última Modificação (ChangedAt)
+  //──────────────────────────────────────────────────────────
+  @UI.lineItem:   [ { position: 80, label: 'Última Modificação' } ]
+  @UI.fieldGroup: [ { qualifier: 'AdminDataGroup', position: 30, label: 'Modificado em' } ]
+  LastChangedAt;
+
+  //──────────────────────────────────────────────────────────
+  // Subárea
+  //──────────────────────────────────────────────────────────
+  @UI.fieldGroup: [ { qualifier: 'DemandDetailsGroup', position: 50, label: 'Subárea' } ]
+  Subarea;
+
+  //──────────────────────────────────────────────────────────
+  // Tipo de Demanda
+  //──────────────────────────────────────────────────────────
+  @UI.fieldGroup: [ { qualifier: 'DemandDetailsGroup', position: 80, label: 'Tipo de Demanda' } ]
+  Tipodemanda;
+
+  //──────────────────────────────────────────────────────────
+  // Criado em / Criado por
+  //──────────────────────────────────────────────────────────
+  @UI.fieldGroup: [ { qualifier: 'AdminDataGroup', position: 10, label: 'Criado em' } ]
+  CreatedAt;
+
+  @UI.fieldGroup: [ { qualifier: 'AdminDataGroup', position: 20, label: 'Criado por' } ]
+  CreatedBy;
+
+  //──────────────────────────────────────────────────────────
+  // Modificado por
+  //──────────────────────────────────────────────────────────
+  @UI.fieldGroup: [ { qualifier: 'AdminDataGroup', position: 40, label: 'Modificado por' } ]
+  LastChangedBy;
+
+};
